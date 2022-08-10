@@ -1,6 +1,7 @@
 #include<iostream>
 #include <math.h> 
 #include <stdexcept>
+#include <string>
 
 using namespace std;
 
@@ -107,11 +108,14 @@ public:
   void setNext(Nodo* p){
       pointer = p;
   }
+  
+  void setNext() {
+      pointer = NULL;
+  }
     
 };
 
 class Lista{
-    
     Nodo* ptr;
     int size;
 
@@ -143,6 +147,7 @@ public:
                 t = t->getNext();    
             }
             t->setNext(new Nodo(d));
+            size++;
         }
         
     }
@@ -151,28 +156,76 @@ public:
         return size;
     }
     
-    void destroy_element_INEFICIENTE_NO_USAR(Nodo* d){
-        Nodo* t = ptr;
-        do {
-            t = t->getNext();
-        } while(t->getNext() != d);
-        destroy_next(t);
+     Nodo* getNodo(int pos) {
+        if(size == 0) {
+            throw invalid_argument("La lista no tienen nodos");
+        } else if (pos >= size || pos < 0) {
+            throw invalid_argument("El nodo no esta en la lista");
+        } else {
+            Nodo* t = ptr;
+            for(int i = 0; i < pos; i++) {
+                t = t->getNext();
+            }
+            return t;
+        }
     }
     
-    void destroy_next(Nodo* d) {
+    void insert(Point* d, int pos) {
+        if(pos > size || pos < 0) {
+            throw invalid_argument("No es posible insertar un nodo en esa posicion");
+        } else if(pos == 0) {
+            Nodo* r = getNodo(pos);
+            Nodo* n = new Nodo(d);
+            n->setNext(r);
+            ptr = n;
+            size++;
+        } else if(pos == size || size == 0) {
+            push_back(d);
+        } else {
+            Nodo* l = getNodo(pos-1);
+            Nodo* r = l->getNext();
+            
+            Nodo* n = new Nodo(d);
+            l->setNext(n);
+            n->setNext(r);
+            size++;
+        }
+    }
+    
+    /*void remove_next(Nodo* d) {
+    // esta no es iterativa
         Nodo* n = d->getNext();
         d->setNext(n->getNext());
         delete n;
         size--;
-    }
+    }*/
     
-    Nodo* getNodo(int i) {
-        if(size == 0) {
-            throw invalid_argument("La lista no tienen nodos");
-        } else {
+    void remove_nodo(int pos){
+        if (pos < 0 || pos >= size) {
+            throw invalid_argument("No hay ningun nodo que eliminar en esa posicion");
+        } else if(pos == 0) {
+            Nodo* obj = ptr;
+            ptr = obj->getNext();
+            delete obj;
+            size--;
+        } else if (pos == size - 1) {
+           Nodo* l = getNodo(pos-1);
+           Nodo* obj = l->getNext();
+           l->setNext();
+           delete obj;
+           size--;
+        } 
+        else {
+            Nodo* l = getNodo(pos-1);
+            Nodo* obj = l->getNext();
+            Nodo* r = obj->getNext();
             
+            l->setNext(r);
+            delete obj;
+            size--;
         }
     }
+    
     
     void print(){
         if(size == 0){
@@ -196,21 +249,20 @@ int main()
    
    Lista l = Lista();
    
-   l.push_back(new Point(1,1));
-   
-   l.print();
-   
-   l.push_back(new Point(2,2));
-   
-   l.print();
-   
-   for(int i = 3; i<10; i++){
+   // PUSH BACK
+   for(int i = 1; i<11; i++){
        l.push_back(new Point(i,i));
    }
-   
    l.print();
    
-   l.destroy_next()
+   // INSERT
+   l.insert(new Point(10,10), 0);
+   l.print();
    
-    return 0;
+   // REMOVE
+   l.remove_nodo(2);
+   l.print();
+   
+   
+   return 0;
 }
