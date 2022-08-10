@@ -123,10 +123,13 @@ public:
     }
     
     ~Lista(){
-        /*Nodo* t = ptr;
+        Nodo* t = ptr;
+        Nodo * n;
         while(t->getNext() != NULL){
-            t = t->getNext();    
-        }*/
+            n = t;
+            t = t->getNext();
+            delete n;
+        }
     }
     
     void push_back(Point* d){
