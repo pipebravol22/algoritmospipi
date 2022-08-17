@@ -256,7 +256,7 @@ int main()
    l.print();
    
    // INSERT
-   l.insert(new Point(10,10), 0);
+   l.insert(new Point(0,0), 0);
    l.print();
    
    // REMOVE
