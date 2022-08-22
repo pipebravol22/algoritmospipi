@@ -240,7 +240,17 @@ public:
             cout<<endl;
         }
     }
-    
+    void invertir(int ptr2){
+        Nodo* nNext;
+        Nodo* ptr2 = NULL;
+        Nodo* n = NULL;
+        Nodo* n = ptr;
+        while(n!=NULL){
+            nNext = n->getNext();
+            n->setNext(ptr2)
+            ptr2 = n
+            n = nNext
+    }
 };
 
 
