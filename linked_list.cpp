@@ -240,6 +240,7 @@ public:
             cout<<endl;
         }
     }
+/*don jaime
     void invertir(int ptr2){
         Nodo* nNext;
         Nodo* ptr2 = NULL;
@@ -251,6 +252,14 @@ public:
             ptr2 = n
             n = nNext
     }
+    n = lista1 -> getptr();
+    m = lista2 -> getptr();
+    
+    lista3->push_back(n->getData(1)lista2;
+    lista3->push_back(m->getData(1);
+    n = n->getNext();
+    m = m ->getNext();
+    
 };
 
 
